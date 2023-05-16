@@ -1,8 +1,16 @@
-from typing import List
+"""
+Fix objC parsing within IDA
+License: LGPLv3
 
-import idc
-import idautils
+https://github.com/doronz88/ida-scripts/blob/main/objc_stubs.py
+"""
+
 from pathlib import Path
+
+import idautils
+import idc
+
+__author__ = 'https://github.com/doronz88'
 
 
 def set_name_with_suffix(ea: int, name: str) -> None:

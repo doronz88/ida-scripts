@@ -1,6 +1,15 @@
+"""
+Add Ctrl+4 Hotkey for accessing the code reference to the current selector
+License: LGPLv3
+
+https://github.com/doronz88/ida-scripts/blob/main/objc_hotkeys.py
+"""
+
 import ida_kernwin
 import idautils
 import idc
+
+__author__ = 'https://github.com/doronz88'
 
 SELECTOR_XREF_HOTKEY = 'Ctrl+4'
 
