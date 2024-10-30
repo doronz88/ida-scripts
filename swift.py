@@ -1,10 +1,11 @@
-from typing import Generator
+from typing import Generator, Union
 
 import ida_bytes
 import ida_funcs
 import ida_hexrays
 import ida_kernwin
 import ida_regfinder
+import idaapi
 import idc
 
 SWIFT_PLUGIN_HOTKEY = 'Ctrl+5'
@@ -130,11 +131,17 @@ def fix_swift_types() -> None:
         idc.SetType(ea, sig)
 
 
-def ida_find_all(expression: str, start_ea: int, end_ea: int) -> Generator[int, None, None]:
-    ea = idc.find_binary(start_ea, idc.SEARCH_DOWN | idc.SEARCH_REGEX, expression)
-    while ea != idc.BADADDR and ea < end_ea:
-        yield ea
-        ea = idc.find_binary(ea + 1, idc.SEARCH_DOWN | idc.SEARCH_REGEX, expression)
+def ida_find_all(payload: Union[bytes, bytearray, str], start_ea: int, end_ea: int) -> Generator[int, None, None]:
+    if float(idaapi.get_kernel_version()) < 9:
+        ea = idc.find_binary(start_ea, idc.SEARCH_DOWN | idc.SEARCH_REGEX, payload)
+        while ea != idc.BADADDR and ea < end_ea:
+            yield ea
+            ea = idc.find_binary(ea + 1, idc.SEARCH_DOWN | idc.SEARCH_REGEX, payload)
+    else:
+        ea = ida_bytes.find_bytes(payload, range_start=start_ea, range_end=end_ea)
+        while ea != idc.BADADDR:
+            yield ea
+            ea = ida_bytes.find_bytes(payload, range_start=ea + 1, range_end=end_ea)
 
 
 def add_swift_string_comments() -> None:
