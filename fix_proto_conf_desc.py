@@ -34,7 +34,7 @@ def parse_pcd(pcd_addr):
 	base_relwitness_addr = 0
 
 	flag_mask_res = flags_value & 0x000c0
-	if(flag_mask_res == 0xc0):
+	if flag_mask_res == 0xc0:
 		idc.set_cmt(pcd_addr+16, "Retroactive string", 0)
 		idc.op_offset(pcd_addr+16, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, pcd_addr+16, 0)
 		base_relwitness_addr = pcd_addr + 20
