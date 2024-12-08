@@ -71,18 +71,17 @@ else:
 	     idc.op_offset(base_relwitness_addr+4, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, base_relwitness_addr+4, 0)
 	     base_relwitness_addr += 8
 	  
-
-	   baseGeneric = base_relwitness_addr
-	   ida_bytes.create_word(baseGeneric, 2)
+	   base_generic = base_relwitness_addr
+	   ida_bytes.create_word(base_generic, 2)
 	   idc.set_cmt(base_relwitness_addr, "Witness table size in words", 0)
-	   ida_bytes.create_word(baseGeneric+2, 2)
-	   idc.set_cmt(baseGeneric+2, "Witness table private size and requires instantiation", 0)
-	   ida_bytes.create_dword(baseGeneric+4, 4)
-	   idc.set_cmt(baseGeneric+4, "Instantiator", 0)
-	   ida_bytes.create_dword(baseGeneric+8, 4)
-	   idc.set_cmt(baseGeneric+8, "Private data", 0)
-	   instantiator = idc.get_wide_dword(baseGeneric+4)
+	   ida_bytes.create_word(base_generic+2, 2)
+	   idc.set_cmt(base_generic+2, "Witness table private size and requires instantiation", 0)
+	   ida_bytes.create_dword(base_generic+4, 4)
+	   idc.set_cmt(base_generic+4, "Instantiator", 0)
+	   ida_bytes.create_dword(base_generic+8, 4)
+	   idc.set_cmt(base_generic+8, "Private data", 0)
+	   instantiator = idc.get_wide_dword(base_generic+4)
 	   if(instantiator > 0):
-	     idc.op_offset(baseGeneric+4, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, baseGeneric+4, 0)
+	     idc.op_offset(base_generic+4, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, base_generic+4, 0)
 	     
-	   idc.op_offset(baseGeneric+8, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, baseGeneric+8, 0)
+	   idc.op_offset(base_generic+8, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, base_generic+8, 0)
