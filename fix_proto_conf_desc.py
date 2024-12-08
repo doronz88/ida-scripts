@@ -26,7 +26,7 @@ def parse_pcd(pcd_addr):
 	idc.set_cmt(pcd_addr+12, "Flags", 0)
 
 	flags_value = idc.get_wide_dword(pcd_addr+12)
-	if(flags_value != 0x30000 and flags_value != 0x300c0 and flags_value != 0x30080):
+	if flags_value not in (0x30000, 0x300c0, 0x30080):
 		print("Unsupported flag value: ",hex(flags_value),". Not parsing this... (WIP!)")
 		return
 
