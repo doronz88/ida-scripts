@@ -2,6 +2,7 @@ import ida_segment
 import idautils
 import idc
 import ida_bytes
+import ida_name
 
 def parse_pcd(pcd_addr):
 
@@ -49,6 +50,12 @@ def parse_pcd(pcd_addr):
 		#create the rel offsets to their definitions
 		ida_bytes.create_dword(base_relwitness_addr, 4)
 		idc.op_offset(base_relwitness_addr, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, base_relwitness_addr, 0)
+		requirement_offset = idc.get_wide_dword(base_relwitness_addr)
+		requirement_addr = base_relwitness_addr + ( ((requirement_offset & 0xffffffff)^0x80000000)-0x80000000 )
+		definition_addr = idc.get_qword(requirement_addr-1)
+		name = ida_name.get_name(definition_addr)
+		idc.set_cmt(base_relwitness_addr, idc.demangle_name(name, idc.get_inf_attr(idc.INF_SHORT_DN)), 0)
+
 		ida_bytes.create_dword(base_relwitness_addr+4, 4)
 		idc.op_offset(base_relwitness_addr+4, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, base_relwitness_addr+4, 0)
 		base_relwitness_addr += 8
