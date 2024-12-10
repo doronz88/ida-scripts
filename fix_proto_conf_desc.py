@@ -152,7 +152,6 @@ def get_swift5_proto_segment() -> ida_segment.segment_t:
 
 def main():
     swift5_proto_seg = get_swift5_proto_segment()
-
     if not swift5_proto_seg:
         print("Couldn't find the __swift5_proto segment")
         return
