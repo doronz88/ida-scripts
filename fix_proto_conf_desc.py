@@ -126,7 +126,6 @@ def make_offset(ea):
     idc.op_offset(ea, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, ea, 0)
 
 def parse_pcd(pcd_addr):
-
     pcd_struct = PCDStruct(pcd_addr)
     idc.create_struct(pcd_addr, pcd_struct.get_size(), pcd_struct.get_name())
     
