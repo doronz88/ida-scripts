@@ -127,7 +127,6 @@ def parse_pcd(pcd_addr):
     idc.create_struct(pcd_addr, pcd_struct.get_size(), pcd_struct.get_name())
     
     flags_value = get_word_with_size(pcd_addr+12, 4)
-
     if flags_value not in (0x30000, 0x300c0, 0x30080):
         print("Unsupported flag value: ",hex(flags_value),". Not parsing this... (WIP!)")
         return
@@ -144,10 +143,9 @@ def parse_pcd(pcd_addr):
     #Relative Witness Table casting
     rwt_struct = RelWitnessTableStruct(base_relwitness_addr)
     idc.create_struct(base_relwitness_addr, rwt_struct.get_size(), rwt_struct.get_name())
-
-    base_gwt_addr = base_relwitness_addr +  rwt_struct.get_size()
     
     #Generic Witness Table casting
+    base_gwt_addr = base_relwitness_addr +  rwt_struct.get_size()
     gwt_struct = GenWitnessTableStruct(base_gwt_addr)
     idc.create_struct(base_gwt_addr, gwt_struct.get_size(), gwt_struct.get_name())
 
