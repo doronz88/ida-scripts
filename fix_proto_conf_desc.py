@@ -7,6 +7,9 @@ from ida_nalt import REF_OFF32, REFINFO_SIGNEDOP, REFINFO_SELFREF
 from idc import FF_DATA, FF_DWORD
 
 class CStruct: 
+    tif = 0
+    SELFREF = REFINFO_SIGNEDOP | REFINFO_SELFREF
+
     def append_int16_member(self, name):
         udm = ida_typeinf.udm_t()
         udm.name = name
@@ -40,9 +43,7 @@ class CStruct:
         return self.tif.get_unpadded_size()
 
 class PCDStruct(CStruct): 
-    tif = 0
     PCD_BASE_IDA_STRUCT_TYPE_NAME = "ProtConfDescriptor"
-    SELFREF = REFINFO_SIGNEDOP | REFINFO_SELFREF
 
     def _create_pcd_struct(self, pcd_address):
         self.tif = ida_typeinf.tinfo_t()
@@ -59,9 +60,7 @@ class PCDStruct(CStruct):
         self._create_pcd_struct(pcd_address)
 
 class RelWitnessTableStruct(CStruct):
-    tif = 0
     RWT_BASE_IDA_STRUCT_TYPE_NAME = "RelWitTable"
-    SELFREF = REFINFO_SIGNEDOP | REFINFO_SELFREF
 
     def _create_rwt(self, rwt_addr, rel_wit_num):
         self.tif = ida_typeinf.tinfo_t()
@@ -81,9 +80,7 @@ class RelWitnessTableStruct(CStruct):
         self._create_rwt(rwt_addr, rel_wit_num)
 
 class GenWitnessTableStruct(CStruct):
-    tif = 0
     GWT_BASE_IDA_STRUCT_TYPE_NAME = "GenWitTable"
-    SELFREF = REFINFO_SIGNEDOP | REFINFO_SELFREF
 
     def _create_gwt(self, gwt_addr):
         self.tif = ida_typeinf.tinfo_t()
