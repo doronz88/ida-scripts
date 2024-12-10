@@ -7,7 +7,6 @@ from ida_nalt import REF_OFF32, REFINFO_SIGNEDOP, REFINFO_SELFREF
 from idc import FF_DATA, FF_DWORD
 
 class CStruct: 
-
     def append_int16_member(self, name):
         udm = ida_typeinf.udm_t()
         udm.name = name
@@ -68,8 +67,9 @@ class RelWitnessTableStruct(CStruct):
         self.tif = ida_typeinf.tinfo_t()
         udt = ida_typeinf.udt_type_data_t()
         self.tif.create_udt(udt)
-        self.tif.set_named_type(None, self.RWT_BASE_IDA_STRUCT_TYPE_NAME+"_"+hex(rwt_addr-4)) #we subtract 4 match the starting address of RWT
+        self.tif.set_named_type(None, self.RWT_BASE_IDA_STRUCT_TYPE_NAME+"_"+hex(rwt_addr))
         self.append_int32_member("NumWitnesses")
+        rwt_addr += 4
         for idx in range(rel_wit_num):
             req_addr = rwt_addr+(idx*2*4)
             req_name = get_symbol_name_from_address(req_addr)
@@ -78,7 +78,6 @@ class RelWitnessTableStruct(CStruct):
 
     def __init__(self, rwt_addr):
         rel_wit_num = get_word_with_size(rwt_addr, 4)
-        rwt_addr += 4
         self._create_rwt(rwt_addr, rel_wit_num)
 
 class GenWitnessTableStruct(CStruct):
@@ -108,7 +107,7 @@ def get_symbol_name_from_address(ea):
     try:
         return idc.demangle_name(name, idc.get_inf_attr(idc.INF_SHORT_DN)) 
     except Exception as e:
-        #Could not demangle the symbol. Just return the name
+        #Could not demangle the symbol. Just return the address 
         return str(requirement_addr)
 
 def get_word_with_size(ea, size):
