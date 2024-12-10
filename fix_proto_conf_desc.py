@@ -45,7 +45,7 @@ class CStruct:
 class PCDStruct(CStruct): 
     PCD_BASE_IDA_STRUCT_TYPE_NAME = "ProtConfDescriptor"
 
-    def _create_pcd_struct(self, pcd_address):
+    def _create_pcd(self, pcd_address):
         self.tif = ida_typeinf.tinfo_t()
         udt = ida_typeinf.udt_type_data_t()
         self.tif.create_udt(udt)
@@ -57,7 +57,7 @@ class PCDStruct(CStruct):
         self.append_int32_member("Flags")
 
     def __init__(self, pcd_address):  
-        self._create_pcd_struct(pcd_address)
+        self._create_pcd(pcd_address)
 
 class RelWitnessTableStruct(CStruct):
     RWT_BASE_IDA_STRUCT_TYPE_NAME = "RelWitTable"
