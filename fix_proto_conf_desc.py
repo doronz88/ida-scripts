@@ -68,7 +68,7 @@ class RelWitnessTableStruct(CStruct):
         self.tif = ida_typeinf.tinfo_t()
         udt = ida_typeinf.udt_type_data_t()
         self.tif.create_udt(udt)
-        self.tif.set_named_type(None, self.RWT_BASE_IDA_STRUCT_TYPE_NAME+"_"+hex(rwt_addr))
+        self.tif.set_named_type(None, self.RWT_BASE_IDA_STRUCT_TYPE_NAME+"_"+hex(rwt_addr-4)) #we subtract 4 match the starting address of RWT
         self.append_int32_member("NumWitnesses")
         for idx in range(rel_wit_num):
             req_addr = rwt_addr+(idx*2*4)
