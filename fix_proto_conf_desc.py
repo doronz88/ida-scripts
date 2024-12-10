@@ -151,7 +151,6 @@ def get_swift5_proto_segment() -> ida_segment.segment_t:
     return None
 
 def main():
-
     swift5_proto_seg = get_swift5_proto_segment()
 
     if not swift5_proto_seg:
