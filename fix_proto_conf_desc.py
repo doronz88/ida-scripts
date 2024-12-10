@@ -132,16 +132,14 @@ def parse_pcd(pcd_addr):
         print("Unsupported flag value: ",hex(flags_value),". Not parsing this... (WIP!)")
         return
 
-    base_relwitness_addr = 0
+    base_relwitness_addr = pcd_addr + 16
     flag_mask_res = flags_value & 0x000c0
     if flag_mask_res == 0xc0:
         #Create Retroactive string reference
         create_word_with_size(pcd_addr+16, 4)
         idc.set_cmt(pcd_addr+16, "Retroactive string", 0)
         make_offset(pcd_addr+16)
-        base_relwitness_addr = pcd_addr + 20
-    else:
-        base_relwitness_addr = pcd_addr + 16
+        base_relwitness_addr += 4
 
     #Relative Witness Table casting
     rwt_struct = RelWitnessTableStruct(base_relwitness_addr)
