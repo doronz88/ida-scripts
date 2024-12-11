@@ -72,10 +72,9 @@ class RelWitnessTableStruct(CStruct):
         rwt_addr += 4
         for idx in range(rel_wit_num):
             req_addr = rwt_addr+(idx*2*4)
-            req_name = get_symbol_name_from_address(req_addr)
-            self.append_reloffset_member("req_"+req_name)
-            self.append_reloffset_member("impl_"+req_name)
-
+            self.append_reloffset_member("req_"+str(idx))
+            self.append_reloffset_member("impl_"+str(idx))
+    
     def __init__(self, rwt_addr: int):
         super().__init__()
         rel_wit_num = ida_bytes.get_wide_dword(rwt_addr)
