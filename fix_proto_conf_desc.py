@@ -97,17 +97,6 @@ class GenWitnessTableStruct(CStruct):
         super().__init__()
         self._create_gwt(gwt_addr)
 
-def get_symbol_name_from_address(ea: int) -> str:
-    requirement_offset = ida_bytes.get_wide_dword(ea)
-    requirement_addr = ea + ( ((requirement_offset & 0xffffffff)^0x80000000)-0x80000000 )
-    definition_addr = ida_bytes.get_qword(requirement_addr-1)
-    name = ida_name.get_name(definition_addr)
-    try:
-        return idc.demangle_name(name, idc.get_inf_attr(idc.INF_SHORT_DN)) 
-    except Exception as e:
-        #Could not demangle the symbol. Just return the address 
-        return hex(requirement_addr)
-
 def make_offset(ea: int):
     idc.op_offset(ea, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, ea, 0)
 

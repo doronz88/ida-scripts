@@ -6,17 +6,19 @@ IDA scripts to help you:
     - Fix all `objc_*` symbol types
 - [`objc_hotkeys.py`](objc_hotkeys.py)
   - Add `Ctrl+4` HotKey to quickly navigate to selector's Xrefs.
+- [`fix_proto_conf_desc`](fix_proto_conf_desc.py)
+  - Parse __swift5_proto segment and parse the ProtocolConformanceDescriptors they point to.
 
 
-# Before and After
+# (objc_stubs.py) Before and After
 
 Before running [`objc_stubs.py`](objc_stubs.py):
 
-![](before.png)
+![](media/objc_stubs_before.png)
 
 After running [`objc_stubs.py`](objc_stubs.py):
 
-![](after.png)
+![](media/objc_stubs_after.png)
 
 As you can see:
 
@@ -26,5 +28,29 @@ As you can see:
   - For example: `id __usercall __spoils<> objc_retain_x20_45@<X0>(id x20@<X20>)`
 
 This makes it much easier to navigate through the code flow.
+
+# (fix_proto_conf_desc) Before and After
+
+Before running [`fix_proto_conf_desc.py`](fix_proto_conf_desc.py):
+
+In the PCD definition:
+
+![](media/pcd_before.png)
+
+The __swift5_proto segment definition:
+
+![](media/pcd2_before.png)
+
+After running [`fix_proto_conf_desc.py`](fix_proto_conf_desc.py):
+
+![](media/pcd_after.png)
+
+The __swift5_proto segment definition:
+
+![](media/pcd2_after.png)
+
+As you can see:
+  - Relative offsets are created in __swift5_proto segment to point to the ProtocolConformanceDescriptor
+  - Parse the ProtocolDescriptorConformance (together with  RelativeWitnessTable and GenericWitnessTable). They will be created as structs so you can use the UI to explore them by expanding the struct.
 
 Have fun!
