@@ -14,11 +14,11 @@ IDA scripts to help you:
 
 Before running [`objc_stubs.py`](objc_stubs.py):
 
-![](media/objc_stubs_before.png)
+![](Media/objc_stubs_before.png)
 
 After running [`objc_stubs.py`](objc_stubs.py):
 
-![](media/objc_stubs_after.png)
+![](Media/objc_stubs_after.png)
 
 As you can see:
 
@@ -33,21 +33,21 @@ This makes it much easier to navigate through the code flow.
 
 Before running [`fix_proto_conf_desc.py`](fix_proto_conf_desc.py):
 
-In the PCD definition:
+In a random PCD definition:
 
-![](media/pcd_before.png)
+![](Media/pcd_before.png)
 
 The __swift5_proto segment definition:
 
-![](media/pcd2_before.png)
+![](Media/pcd2_before.png)
 
 After running [`fix_proto_conf_desc.py`](fix_proto_conf_desc.py):
 
-![](media/pcd_after.png)
+![](Media/pcd_after.png)
 
 The __swift5_proto segment definition:
 
-![](media/pcd2_after.png)
+![](Media/pcd2_after.png)
 
 As you can see:
   - Relative offsets are created in __swift5_proto segment to point to the ProtocolConformanceDescriptor
