@@ -10,7 +10,7 @@ class CStruct:
     SELFREF = REFINFO_SIGNEDOP | REFINFO_SELFREF
 
     def __init__(self):
-        self.tif = 0
+        self.tif = ida_typeinf.tinfo_t()
 
     def _append_member(self, name: str, ida_type: int) -> ida_typeinf.udm_t:
         """
@@ -48,7 +48,6 @@ class PCDStruct(CStruct):
     PCD_BASE_IDA_STRUCT_TYPE_NAME = "ProtConfDescriptor"
 
     def _create_pcd(self, pcd_address: int):
-        self.tif = ida_typeinf.tinfo_t()
         udt = ida_typeinf.udt_type_data_t()
         self.tif.create_udt(udt)
         self.tif.set_named_type(None, f"{self.PCD_BASE_IDA_STRUCT_TYPE_NAME}_{pcd_address:x}")
@@ -59,13 +58,13 @@ class PCDStruct(CStruct):
         self.append_int32_member("Flags")
 
     def __init__(self, pcd_address: int):  
+        super().__init__()
         self._create_pcd(pcd_address)
 
 class RelWitnessTableStruct(CStruct):
     RWT_BASE_IDA_STRUCT_TYPE_NAME = "RelWitTable"
 
     def _create_rwt(self, rwt_addr: int, rel_wit_num: int):
-        self.tif = ida_typeinf.tinfo_t()
         udt = ida_typeinf.udt_type_data_t()
         self.tif.create_udt(udt)
         self.tif.set_named_type(None, f"{self.RWT_BASE_IDA_STRUCT_TYPE_NAME}_{rwt_addr:x}")
@@ -78,6 +77,7 @@ class RelWitnessTableStruct(CStruct):
             self.append_reloffset_member("impl_"+req_name)
 
     def __init__(self, rwt_addr: int):
+        super().__init__()
         rel_wit_num = ida_bytes.get_wide_dword(rwt_addr)
         self._create_rwt(rwt_addr, rel_wit_num)
 
@@ -85,7 +85,6 @@ class GenWitnessTableStruct(CStruct):
     GWT_BASE_IDA_STRUCT_TYPE_NAME = "GenWitTable"
 
     def _create_gwt(self, gwt_addr: int):
-        self.tif = ida_typeinf.tinfo_t()
         udt = ida_typeinf.udt_type_data_t()
         self.tif.create_udt(udt)
         self.tif.set_named_type(None, f"{self.GWT_BASE_IDA_STRUCT_TYPE_NAME}_{gwt_addr:x}")
@@ -96,6 +95,7 @@ class GenWitnessTableStruct(CStruct):
         self.append_reloffset_member("PrivateData")
 
     def __init__(self, gwt_addr: int):
+        super().__init__()
         self._create_gwt(gwt_addr)
 
 def get_symbol_name_from_address(ea: int) -> str:
@@ -107,7 +107,7 @@ def get_symbol_name_from_address(ea: int) -> str:
         return idc.demangle_name(name, idc.get_inf_attr(idc.INF_SHORT_DN)) 
     except Exception as e:
         #Could not demangle the symbol. Just return the address 
-        return str(hex(requirement_addr))
+        return hex(requirement_addr)
 
 def make_offset(ea: int):
     idc.op_offset(ea, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, ea, 0)
