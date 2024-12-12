@@ -72,10 +72,9 @@ class RelWitnessTableStruct(CStruct):
         rwt_addr += 4
         for idx in range(rel_wit_num):
             req_addr = rwt_addr+(idx*2*4)
-            req_name = get_symbol_name_from_address(req_addr)
-            self.append_reloffset_member("req_"+req_name)
-            self.append_reloffset_member("impl_"+req_name)
-
+            self.append_reloffset_member("req_"+str(idx))
+            self.append_reloffset_member("impl_"+str(idx))
+    
     def __init__(self, rwt_addr: int):
         super().__init__()
         rel_wit_num = ida_bytes.get_wide_dword(rwt_addr)
@@ -97,17 +96,6 @@ class GenWitnessTableStruct(CStruct):
     def __init__(self, gwt_addr: int):
         super().__init__()
         self._create_gwt(gwt_addr)
-
-def get_symbol_name_from_address(ea: int) -> str:
-    requirement_offset = ida_bytes.get_wide_dword(ea)
-    requirement_addr = ea + ( ((requirement_offset & 0xffffffff)^0x80000000)-0x80000000 )
-    definition_addr = ida_bytes.get_qword(requirement_addr-1)
-    name = ida_name.get_name(definition_addr)
-    try:
-        return idc.demangle_name(name, idc.get_inf_attr(idc.INF_SHORT_DN)) 
-    except Exception as e:
-        #Could not demangle the symbol. Just return the address 
-        return hex(requirement_addr)
 
 def make_offset(ea: int):
     idc.op_offset(ea, 0, REF_OFF32|REFINFO_SIGNEDOP, -1, ea, 0)
