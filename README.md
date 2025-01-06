@@ -8,6 +8,8 @@ IDA scripts to help you:
   - Add `Ctrl+4` HotKey to quickly navigate to selector's Xrefs.
 - [`fix_proto_conf_desc.py`](fix_proto_conf_desc.py)
   - Parse `__swift5_proto` segment and parse the ProtocolConformanceDescriptors they point to.
+  - [`fix_assocty.py`](fix_assocty.py)
+  - Parse `__swift5_assocty` segment.
 - [`swift.py`](swift.py)
   - Add hotkeys (`Ctrl+5`) for parsing `Swift::String` within current function
 
