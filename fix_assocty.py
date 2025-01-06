@@ -57,12 +57,13 @@ class AssocTypeCStruct:
     def get_size(self):
         return self.tif.get_unpadded_size()
 
-def get_swift5_proto_segment() -> ida_segment.segment_t:
+def get_swift5_assocty_segment() -> ida_segment.segment_t:
     seg = None
     found = False
     for seg_ea in idautils.Segments():
         seg = ida_segment.getseg(seg_ea)
         seg_name = ida_segment.get_segm_name(seg)
+        #if you are analyzing the DSC you need to adapt this comparison to all segments or one library in specific
         if(seg_name == "__swift5_assocty"):
             return seg
 
@@ -75,7 +76,7 @@ def parse_assocty(assoctype_addr: int) -> int:
     return assoc_type_struct.get_size()
 
 def main():
-    swift5_proto_seg = get_swift5_proto_segment()
+    swift5_proto_seg = get_swift5_assocty_segment()
     if not swift5_proto_seg:
         print("Couldn't find the __swift5_assocty segment")
         return
