@@ -40,6 +40,12 @@ struct Swift_ArrayAny {
 """
 
 FUNCTIONS_SIGNATURES = {
+    # Base runtime
+    '_swift_allocObject': 'void *__fastcall swift_allocObject(void *metadata, size_t requiredSize, size_t requiredAlignmentMask)',
+
+    # Dispatch
+    '_$sSo17OS_dispatch_queueC8DispatchE5label3qos10attributes20autoreleaseFrequency6targetABSS_AC0D3QoSVAbCE10AttributesVAbCE011AutoreleaseI0OABSgtcfC': '__int64 __usercall OS_dispatch_queue_init_label_qos_attributes_autoreleaseFrequency_target__@<X0>(Swift::String label@<X0:X1>, _QWORD qos@<X2>, _QWORD attributes@<X3>, _QWORD frequency@<X4>, _QWORD target@<X5>)',
+
     # Foundation.URL
     '_$s10Foundation3URLV6stringACSgSSh_tcfC':
         'void __swiftcall URL_init_string__(__int64 *__return_ptr, Swift::String url)',
@@ -66,6 +72,12 @@ FUNCTIONS_SIGNATURES = {
         'NSString __swiftcall String__bridgeToObjectiveC__(Swift::String)',
     '_swift_bridgeObjectRelease': 'void swift_bridgeObjectRelease(id)',
     '_swift_bridgeObjectRetain': 'id swift_bridgeObjectRetain(id)',
+    '_$sSD10FoundationE19_bridgeToObjectiveCSo12NSDictionaryCyF':
+        'NSDictionary __swiftcall Dictionary__bridgeToObjectiveC__(id swiftDict, id typeMetadata, id unknown, id protocolWitness)',
+    '_swift_bridgeObjectRetain': 'id __fastcall swift_bridgeObjectRetain(id)',
+    '_swift_bridgeObjectRelease': 'void __fastcall swift_bridgeObjectRelease(id)',
+    '_$sSS10FoundationE36_unconditionallyBridgeFromObjectiveCySSSo8NSStringCSgFZ': 'Swift::String __fastcall static_String__unconditionallyBridgeFromObjectiveC____(id)',
+    '_$sSa10FoundationE19_bridgeToObjectiveCSo7NSArrayCyF': 'NSArray __swiftcall Array__bridgeToObjectiveC__(Swift_ArrayAny *)',
 
     # Allocating global objects
     '___swift_allocate_value_buffer': 'void *__fastcall __swift_allocate_value_buffer(void *typeInfo, void **pObject)',
